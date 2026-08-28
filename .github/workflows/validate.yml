@@ -10,7 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Install shellcheck
         run: sudo apt-get update -q && sudo apt-get install -y -q shellcheck
+      - name: Generated adapter and lock drift
+        run: |
+          npm run generate:check
+          node scripts/update-lock.mjs --check
+      - name: Fixtures
+        run: npm test
       - name: Consistency checks
         run: bash scripts/validate.sh

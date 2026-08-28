@@ -1,257 +1,307 @@
 {
-  "_comment": "Two kinds of mapping. `backend`/`frontend` map a project's STACK (CLAUDE.md §5) to build skills — pass leaf keys to bootstrap, and the matching build agent invokes them only when the stack is present. Backend keys are mutually exclusive (a project has one): .net | supabase | firebase. Frontend keys coexist (a project may ship several): web | ios | flutter. `roles` maps each PIPELINE AGENT to always-on skills it uses regardless of stack — pass `roles` to install them all, or an agent name (e.g. designer) for one. Run `bash scripts/bootstrap.sh <key…>`. kind=skills-cli → `npx skills add <ref>`; kind=plugin → `claude plugin marketplace add <marketplace>` then `claude plugin install <plugin>@<marketplaceName>`; kind=mcp → an MCP server: if it has a `command`, bootstrap.sh runs it directly (e.g. `claude mcp add ...`); without one it's informational only (configure separately). kind=script → an arbitrary shell `command` bootstrap.sh runs as-is (e.g. a vendor's `curl | node` installer). CAUTION: refs/commands point at third-party repos/hosts tracking their default branch or latest release — they are not version-pinned, so upstream renames/deletions break installs; bootstrap.sh reports any failure explicitly.",
-  "backend": {
-    ".net": [
-      {
-        "name": "dotnet-clean-arch",
-        "kind": "skills-cli",
-        "ref": "i4mjad/dotnet-clean-arch-skill",
-        "invoke": "/dotnet-clean-arch"
-      }
-    ],
-    "supabase": [
-      {
-        "name": "supabase",
-        "kind": "skills-cli",
-        "ref": "supabase/agent-skills@supabase",
-        "invoke": "/supabase"
-      },
-      {
-        "name": "supabase-postgres-best-practices",
-        "kind": "skills-cli",
-        "ref": "supabase/agent-skills@supabase-postgres-best-practices",
-        "invoke": "/supabase-postgres-best-practices"
-      }
-    ],
-    "firebase": [
-      {
-        "name": "firebase",
-        "kind": "skills-cli",
-        "ref": "firebase/agent-skills",
-        "invoke": "/firebase-basics, /firebase-auth-basics, /firebase-firestore, /firebase-security-rules-auditor"
-      }
-    ]
-  },
-  "frontend": {
-    "web": [
-      {
-        "name": "tailwind-design-system",
-        "kind": "skills-cli",
-        "ref": "wshobson/agents@tailwind-design-system",
-        "invoke": "/tailwind-design-system"
-      },
-      {
-        "name": "accessibility",
-        "kind": "skills-cli",
-        "ref": "addyosmani/web-quality-skills@accessibility",
-        "invoke": "/accessibility"
-      },
-      {
-        "name": "reui-mcp",
-        "kind": "mcp",
-        "command": "claude mcp add --transport http reui https://mcp.reui.io",
-        "invoke": "ReUI MCP (component registry/docs)"
-      },
-      {
-        "name": "reui-skills",
-        "kind": "script",
-        "command": "curl -fsSL https://mcp.reui.io/install | node -",
-        "invoke": "ReUI skills"
-      }
-    ],
-    "ios": [
-      {
-        "name": "swiftui-expert",
-        "kind": "plugin",
-        "marketplace": "AvdLee/SwiftUI-Agent-Skill",
-        "marketplaceName": "swiftui-expert-skill",
-        "plugin": "swiftui-expert",
-        "invoke": "/swiftui-expert"
-      }
-    ],
-    "flutter": [
-      {
-        "name": "flutter",
-        "kind": "skills-cli",
-        "ref": "flutter/skills",
-        "invoke": "/flutter-apply-architecture-best-practices, /flutter-build-responsive-layout, /flutter-setup-declarative-routing, /flutter-add-widget-test"
-      }
-    ]
-  },
-  "roles": {
-    "discovery": [
-      {
-        "name": "grill-me",
-        "kind": "skills-cli",
-        "ref": "mattpocock/skills@grill-me",
-        "invoke": "/grill-me",
-        "note": "Same ref the business-analyst uses — a project that already ran `/bootstrap roles` has it installed."
-      },
-      {
-        "name": "i-have-adhd",
-        "kind": "plugin",
-        "marketplace": "ayghri/i-have-adhd",
-        "marketplaceName": "i-have-adhd",
-        "plugin": "i-have-adhd",
-        "invoke": "/i-have-adhd:i-have-adhd",
-        "note": "MANDATORY for every document artifact this agent writes — see CLAUDE.md §6 'Artifact writing standard'. The codex gates check artifacts against it."
-      }
-    ],
-    "business-analyst": [
-      {
-        "name": "grill-me",
-        "kind": "skills-cli",
-        "ref": "mattpocock/skills@grill-me",
-        "invoke": "/grill-me"
-      },
-      {
-        "name": "wayfinder",
-        "kind": "skills-cli",
-        "ref": "mattpocock/skills@wayfinder",
-        "invoke": "/wayfinder",
-        "note": "For big multi-session efforts; charts decision tickets on an issue tracker. Needs a tracker configured — run /setup-matt-pocock-skills and pick github (via gh CLI), gitlab, or local markdown. No Linear tracker upstream."
-      },
-      {
-        "name": "i-have-adhd",
-        "kind": "plugin",
-        "marketplace": "ayghri/i-have-adhd",
-        "marketplaceName": "i-have-adhd",
-        "plugin": "i-have-adhd",
-        "invoke": "/i-have-adhd:i-have-adhd",
-        "note": "MANDATORY for every document artifact this agent writes — see CLAUDE.md §6 'Artifact writing standard'. The codex gates check artifacts against it."
-      }
-    ],
-    "product-manager": [
-      {
-        "name": "to-spec",
-        "kind": "skills-cli",
-        "ref": "mattpocock/skills@to-spec",
-        "invoke": "/to-spec"
-      },
-      {
-        "name": "to-tickets",
-        "kind": "skills-cli",
-        "ref": "mattpocock/skills@to-tickets",
-        "invoke": "/to-tickets"
-      },
-      {
-        "name": "i-have-adhd",
-        "kind": "plugin",
-        "marketplace": "ayghri/i-have-adhd",
-        "marketplaceName": "i-have-adhd",
-        "plugin": "i-have-adhd",
-        "invoke": "/i-have-adhd:i-have-adhd",
-        "note": "MANDATORY for every document artifact this agent writes — see CLAUDE.md §6 'Artifact writing standard'. The codex gates check artifacts against it."
-      }
-    ],
-    "architect": [
-      {
-        "name": "architecture-designer",
-        "kind": "skills-cli",
-        "ref": "jeffallan/claude-skills@architecture-designer",
-        "invoke": "/architecture-designer"
-      },
-      {
-        "name": "i-have-adhd",
-        "kind": "plugin",
-        "marketplace": "ayghri/i-have-adhd",
-        "marketplaceName": "i-have-adhd",
-        "plugin": "i-have-adhd",
-        "invoke": "/i-have-adhd:i-have-adhd",
-        "note": "MANDATORY for every document artifact this agent writes — see CLAUDE.md §6 'Artifact writing standard'. The codex gates check artifacts against it."
-      }
-    ],
-    "designer": [
-      {
-        "name": "design-taste-frontend",
-        "kind": "skills-cli",
-        "ref": "leonxlnx/taste-skill@design-taste-frontend",
-        "invoke": "/design-taste-frontend"
-      },
-      {
-        "name": "high-end-visual-design",
-        "kind": "skills-cli",
-        "ref": "leonxlnx/taste-skill@high-end-visual-design",
-        "invoke": "/high-end-visual-design"
-      },
-      {
-        "name": "refactoring-ui-skills",
-        "kind": "plugin",
-        "marketplace": "gnurio/refactoring-ui-plugin",
-        "marketplaceName": "refactoring-ui-plugin",
-        "plugin": "refactoring-ui-skills",
-        "invoke": "/refactoring-ui-skills:meta-refactor-ui"
-      },
-      {
-        "name": "figma",
-        "kind": "plugin",
-        "marketplace": "anthropics/claude-plugins-official",
-        "marketplaceName": "claude-plugins-official",
-        "plugin": "figma",
-        "invoke": "figma:* skills"
-      },
-      {
-        "name": "mobbin",
-        "kind": "mcp",
-        "invoke": "Mobbin MCP (pattern research)",
-        "source": "MCP server — configure separately; not installed via bootstrap"
-      },
-      {
-        "name": "i-have-adhd",
-        "kind": "plugin",
-        "marketplace": "ayghri/i-have-adhd",
-        "marketplaceName": "i-have-adhd",
-        "plugin": "i-have-adhd",
-        "invoke": "/i-have-adhd:i-have-adhd",
-        "note": "MANDATORY for every document artifact this agent writes — see CLAUDE.md §6 'Artifact writing standard'. The codex gates check artifacts against it."
-      }
-    ],
-    "code-reviewer": [
-      {
-        "name": "ponytail",
-        "kind": "plugin",
-        "marketplace": "DietrichGebert/ponytail",
-        "marketplaceName": "ponytail",
-        "plugin": "ponytail",
-        "invoke": "/ponytail-review, /ponytail-audit"
-      },
-      {
-        "name": "code-review-graph",
-        "kind": "plugin",
-        "marketplace": "tirth8205/code-review-graph",
-        "marketplaceName": "code-review-graph",
-        "plugin": "code-review-graph",
-        "invoke": "/code-review-graph:review-delta"
-      }
-    ],
-    "qa-tester": [
-      {
-        "name": "playwright",
-        "kind": "plugin",
-        "marketplace": "anthropics/claude-plugins-official",
-        "marketplaceName": "claude-plugins-official",
-        "plugin": "playwright",
-        "invoke": "Playwright MCP (browser testing)"
-      }
-    ],
-    "api-tester": [
-      {
-        "name": "api-testing",
-        "kind": "skills-cli",
-        "ref": "secondsky/claude-skills@api-testing",
-        "invoke": "/api-testing"
-      }
-    ],
-    "codex-reviewer": [
-      {
-        "name": "codex",
-        "kind": "plugin",
-        "marketplace": "openai/codex-plugin-cc",
-        "marketplaceName": "openai-codex",
-        "plugin": "codex",
-        "invoke": "the `codex` CLI (the agent shells out to `codex exec`; `/codex:setup` handles auth)",
-        "note": "The plugin's own /codex:* commands are user-invocable only (disable-model-invocation), so the agent uses the codex CLI directly. Without it the codex gates fall back to human gates."
-      }
-    ]
-  }
+  "$schema": "./schemas/skills-manifest.schema.json",
+  "schemaVersion": 1,
+  "catalog": "المعمل — The Lab reviewed dependency catalog",
+  "dependencies": [
+    {
+      "id": "i-have-adhd",
+      "groups": ["core", "writing"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/ayghri/i-have-adhd" },
+      "resolved": { "kind": "commit", "value": "cbe69fb83c08a37cf54d5ec9ec6bb88c8bc9973c" },
+      "trust": { "level": "global-write", "review": "Installs a plugin and configures an always-on user writing standard for both hosts." },
+      "invocation": { "policy": "always", "roles": ["discovery", "business-analyst", "product-manager", "architect", "designer"], "entrypoints": [] },
+      "installer": { "kind": "host-plugin", "marketplace": "i-have-adhd", "plugin": "i-have-adhd" }
+    },
+    {
+      "id": "grilling",
+      "groups": ["core", "roles"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "instructions", "review": "Automatic questioning workflow; no external credentials." },
+      "invocation": { "policy": "automatic", "roles": ["discovery", "business-analyst", "product-manager"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "grilling" }
+    },
+    {
+      "id": "architecture-designer",
+      "groups": ["core", "roles"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/Jeffallan/claude-skills" },
+      "resolved": { "kind": "commit", "value": "882ef55e377dbf9a4dbe496bb41ac6ccd0e555cf" },
+      "trust": { "level": "instructions", "review": "Automatic architecture analysis; artifact writes remain role-scoped." },
+      "invocation": { "policy": "automatic", "roles": ["architect"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "architecture-designer" }
+    },
+    {
+      "id": "tdd",
+      "groups": ["core", "roles"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "workspace-write", "review": "Automatic implementation workflow used only by build roles." },
+      "invocation": { "policy": "automatic", "roles": ["frontend", "ios", "flutter", "backend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "tdd" }
+    },
+    {
+      "id": "code-review",
+      "groups": ["core", "roles"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "read-only", "review": "Automatic reviewer skill; host adapter enforces read-only." },
+      "invocation": { "policy": "automatic", "roles": ["code-reviewer"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "code-review" }
+    },
+    {
+      "id": "api-testing",
+      "groups": ["core", "roles", "backend"],
+      "status": "required",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/secondsky/claude-skills" },
+      "resolved": { "kind": "commit", "value": "ad16332a30363b7cc13aa97baac3edeb8c9cc558" },
+      "trust": { "level": "network-test", "review": "May exercise user-provided APIs; no code edits." },
+      "invocation": { "policy": "automatic", "roles": ["api-tester"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "api-testing" }
+    },
+    {
+      "id": "accessibility",
+      "groups": ["core", "web"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/addyosmani/web-quality-skills" },
+      "resolved": { "kind": "commit", "value": "afa8da942115f2961fdbfa80807ea0b232ff6c00" },
+      "trust": { "level": "workspace-read", "review": "Required for active web projects." },
+      "invocation": { "policy": "automatic", "roles": ["frontend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "accessibility" }
+    },
+    {
+      "id": "grill-me",
+      "groups": ["optional", "manual"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "interactive", "review": "User-only interview workflow." },
+      "invocation": { "policy": "manual", "roles": [], "entrypoints": ["grill-me"] },
+      "installer": { "kind": "skills-cli", "skill": "grill-me" }
+    },
+    {
+      "id": "to-spec",
+      "groups": ["optional", "manual"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "external-write", "review": "User-only publishing workflow." },
+      "invocation": { "policy": "manual", "roles": [], "entrypoints": ["to-spec"] },
+      "installer": { "kind": "skills-cli", "skill": "to-spec" }
+    },
+    {
+      "id": "to-tickets",
+      "groups": ["optional", "manual"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "external-write", "review": "User-only issue creation workflow." },
+      "invocation": { "policy": "manual", "roles": [], "entrypoints": ["to-tickets"] },
+      "installer": { "kind": "skills-cli", "skill": "to-tickets" }
+    },
+    {
+      "id": "wayfinder",
+      "groups": ["optional", "manual"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/mattpocock/skills" },
+      "resolved": { "kind": "commit", "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76" },
+      "trust": { "level": "external-write", "review": "User-only issue-tracker workflow; credentials remain user-owned." },
+      "invocation": { "policy": "manual", "roles": [], "entrypoints": ["wayfinder"] },
+      "installer": { "kind": "skills-cli", "skill": "wayfinder" }
+    },
+    {
+      "id": "swiftui-expert-skill",
+      "groups": ["ios"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/AvdLee/SwiftUI-Agent-Skill" },
+      "resolved": { "kind": "commit", "value": "4c6a97d15aa5e023538c3cb06b5192f241dd451d" },
+      "trust": { "level": "workspace-write", "review": "Required only for active native iOS." },
+      "invocation": { "policy": "automatic", "roles": ["ios"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "swiftui-expert-skill" }
+    },
+    {
+      "id": "flutter-official",
+      "groups": ["flutter"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "BSD-3-Clause",
+      "source": { "kind": "git", "url": "https://github.com/flutter/agent-plugins" },
+      "resolved": { "kind": "commit", "value": "864cf8797b190ddb81e4875db6dd6bab89641f62" },
+      "trust": { "level": "workspace-write", "review": "Official Flutter suite; required only for active Flutter." },
+      "invocation": { "policy": "automatic", "roles": ["flutter"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "*" }
+    },
+    {
+      "id": "supabase",
+      "groups": ["supabase"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/supabase/agent-skills" },
+      "resolved": { "kind": "commit", "value": "8331f910845103c08d51f6ca1d86ebb7d1f745e3" },
+      "trust": { "level": "external-write", "review": "Official suite; database credentials and mutations remain user-owned." },
+      "invocation": { "policy": "conditional", "roles": ["backend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "*" }
+    },
+    {
+      "id": "firebase",
+      "groups": ["firebase"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "Apache-2.0",
+      "source": { "kind": "git", "url": "https://github.com/firebase/agent-skills" },
+      "resolved": { "kind": "commit", "value": "a0b4e143f40c1ebe05fe5f9a4787fecd4da8f478" },
+      "trust": { "level": "external-write", "review": "Official suite; project authentication remains user-owned." },
+      "invocation": { "policy": "conditional", "roles": ["backend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "*" }
+    },
+    {
+      "id": "dotnet-clean-arch",
+      "groups": [".net"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "NOASSERTION",
+      "source": { "kind": "git", "url": "https://github.com/i4mjad/dotnet-clean-arch-skill" },
+      "resolved": { "kind": "commit", "value": "92ba2b7d2611b75255811df3df0e168bfa4c1b20" },
+      "trust": { "level": "maintainer-trusted", "review": "Conditional .NET pack maintained by the same owner; license must be reviewed before redistribution." },
+      "invocation": { "policy": "conditional", "roles": ["backend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "dotnet-clean-arch" }
+    },
+    {
+      "id": "tailwind-design-system",
+      "groups": ["tailwind"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/wshobson/agents" },
+      "resolved": { "kind": "commit", "value": "38e19c20d2b154510b0e624a2e3e186b19b5c527" },
+      "trust": { "level": "workspace-write", "review": "Install only when the project uses Tailwind." },
+      "invocation": { "policy": "conditional", "roles": ["frontend"], "entrypoints": [] },
+      "installer": { "kind": "skills-cli", "skill": "tailwind-design-system" }
+    },
+    {
+      "id": "design-taste-frontend",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/Leonxlnx/taste-skill" },
+      "resolved": { "kind": "commit", "value": "ccbc15639c97057cbfcf32ecebc38ef716e4bb37" },
+      "trust": { "level": "workspace-write", "review": "Opt in for suitable marketing or redesign work only." },
+      "invocation": { "policy": "manual", "roles": ["designer"], "entrypoints": ["design-taste-frontend"] },
+      "installer": { "kind": "skills-cli", "skill": "design-taste-frontend" }
+    },
+    {
+      "id": "high-end-visual-design",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/Leonxlnx/taste-skill" },
+      "resolved": { "kind": "commit", "value": "ccbc15639c97057cbfcf32ecebc38ef716e4bb37" },
+      "trust": { "level": "workspace-write", "review": "Explicit design opt-in." },
+      "invocation": { "policy": "manual", "roles": ["designer"], "entrypoints": ["high-end-visual-design"] },
+      "installer": { "kind": "skills-cli", "skill": "high-end-visual-design" }
+    },
+    {
+      "id": "code-review-graph",
+      "groups": ["optional", "large-repo"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "MIT",
+      "source": { "kind": "git", "url": "https://github.com/tirth8205/code-review-graph" },
+      "resolved": { "kind": "commit", "value": "b58668751ab0c7670c078cf7cbd4d1f5b8e54f81" },
+      "trust": { "level": "local-index", "review": "Optional impact index; inspect storage and privacy before enabling." },
+      "invocation": { "policy": "manual", "roles": ["code-reviewer"], "entrypoints": ["code-review-graph"] },
+      "installer": { "kind": "skills-cli", "skill": "code-review-graph" }
+    },
+    {
+      "id": "mobile-mcp",
+      "groups": ["mobile", "ios", "flutter"],
+      "status": "conditional",
+      "hosts": ["claude", "codex"],
+      "license": "Apache-2.0",
+      "source": { "kind": "npm", "url": "https://www.npmjs.com/package/@mobilenext/mobile-mcp" },
+      "resolved": { "kind": "version", "value": "1.0.2", "integrity": "sha512-EVWH2dLOL69Ur1HZn7g5oPEhVnCbpyoZdKLKUAjQWh5JGn9i10OU6TrS+onInzUeRWFJY18M7Cnha4Q+LgxzKA==" },
+      "trust": { "level": "device-control", "review": "Attach-only allowlist, telemetry disabled; lifecycle/orientation tools remain unavailable." },
+      "invocation": { "policy": "automatic", "roles": ["mobile-qa"], "entrypoints": [] },
+      "installer": { "kind": "npm-mcp", "package": "@mobilenext/mobile-mcp" }
+    },
+    {
+      "id": "reui",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "Proprietary",
+      "source": { "kind": "service", "url": "https://mcp.reui.io" },
+      "resolved": { "kind": "endpoint", "value": "https://mcp.reui.io" },
+      "trust": { "level": "network-service", "review": "Explicit opt-in; no curl-pipe installer is permitted." },
+      "invocation": { "policy": "manual", "roles": ["designer", "frontend"], "entrypoints": [] },
+      "installer": { "kind": "manual" }
+    },
+    {
+      "id": "figma",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "Proprietary",
+      "source": { "kind": "service", "url": "https://www.figma.com" },
+      "resolved": { "kind": "user-configured", "value": "official-connector" },
+      "trust": { "level": "external-account", "review": "Explicit opt-in; authentication and file access remain user-owned." },
+      "invocation": { "policy": "manual", "roles": ["designer"], "entrypoints": [] },
+      "installer": { "kind": "manual" }
+    },
+    {
+      "id": "mobbin",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "Proprietary",
+      "source": { "kind": "service", "url": "https://mobbin.com" },
+      "resolved": { "kind": "user-configured", "value": "mcp" },
+      "trust": { "level": "external-account", "review": "Explicit opt-in; authentication remains user-owned." },
+      "invocation": { "policy": "manual", "roles": ["designer"], "entrypoints": [] },
+      "installer": { "kind": "manual" }
+    },
+    {
+      "id": "refactoring-ui",
+      "groups": ["optional", "design"],
+      "status": "optional",
+      "hosts": ["claude", "codex"],
+      "license": "NOASSERTION",
+      "source": { "kind": "service", "url": "https://github.com/gnurio/refactoring-ui-plugin" },
+      "resolved": { "kind": "user-configured", "value": "review-before-install" },
+      "trust": { "level": "third-party-plugin", "review": "Explicit opt-in with license and prompt review required." },
+      "invocation": { "policy": "manual", "roles": ["designer"], "entrypoints": [] },
+      "installer": { "kind": "manual" }
+    }
+  ]
 }

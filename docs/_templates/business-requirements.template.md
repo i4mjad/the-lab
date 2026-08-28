@@ -40,4 +40,4 @@
 
 ## 8. Constraints
 <Regulatory/compliance, privacy & safety constraints, localization (language + RTL), commercial,
-timeline — per the domain defaults in CLAUDE.md §4, as known.>
+timeline — per the domain defaults in AGENTS.md §4, as known.>

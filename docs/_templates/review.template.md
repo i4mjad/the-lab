@@ -1,54 +1,69 @@
 # Review — <initiative title>
 
 - **Slug:** <slug>
-- **Written by:** orchestrator (consolidated from code-reviewer, qa-tester, api-tester, codex-reviewer)
+- **Written by:** orchestrator, consolidating all applicable read-only reviewers
 - **Round:** <1 | 2 | 3>
-- **Verdict:** GREEN (zero open blockers and majors; minors listed) | issues open (see Routed fixes) |
-  NOT SHIPPABLE (blockers/majors remain at the 3-round cap)
+- **Verdict:** GREEN | issues open | NOT SHIPPABLE
 
-> Reviewers return findings to the orchestrator; the orchestrator writes this single file to avoid
-> parallel-write clobber.
+Green means zero open blockers/majors, full quality-gate PASS, no unresolved peer dispute, and every
+applicable QA result present. Missing required configuration or evidence is never a fallback or skip.
 
-## Code review  (from code-reviewer)
-| # | Finding | File / location | Severity | Owner |
+## Full quality gate
+
+```text
+<paste ./quality-gate.sh output, with no QUICK>
+```
+
+Every FAIL row is an owner-routed blocker. Inactive platforms alone are N/A.
+
+## Code review
+
+| ID | Finding | File / line | Severity | Owner |
 |---|---|---|---|---|
-| C1 | <clean/SOLID/DRY/YAGNI/SIMPLE issue — incl. over-engineering> | <path> | blocker/major/minor | frontend/ios/flutter/backend |
+| C1 | <correctness or maintainability issue> | <path:line> | blocker/major/minor | frontend/ios/flutter/backend |
 
-## QA — browser  (from qa-tester)
-| # | Story / AC | Result | Evidence | Severity | Owner |
+## Browser QA — web only
+
+| ID | Story / AC | Result | Evidence | Severity | Owner |
 |---|---|---|---|---|---|
-| Q1 | US-1 / Scenario … | pass/fail | <what was observed> | … | frontend/ios/flutter/backend |
+| Q1 | US-1 / Scenario | pass/fail | <observation> | <severity> | frontend |
 
-## API  (from api-tester)
-| # | Endpoint / AC | Scenario (incl. validation/authz) | Result | Severity | Owner |
+## API QA — backend only
+
+| ID | Endpoint / AC | Validation/auth scenario | Result | Severity | Owner |
 |---|---|---|---|---|---|
-| A1 | <method path> / US-1 | <error/validation/authz case> | pass/fail | … | backend |
+| A1 | <method path> | <case> | pass/fail | <severity> | backend |
 
-## Peer review — Codex, adversarial  (from codex-reviewer)
+## Mobile QA — iOS or Flutter only
 
-Codex reviewed the branch diff independently; codex-reviewer challenged every finding against the
-source. Only `agreed` and `disputed-revised` findings count toward green. `disputed-escalated` is a
-standing disagreement — the user decides.
+- **Mobile MCP:** pinned 1.0.2 present | missing → blocker
+- **Attached device:** <already booted identifier> | missing → blocker
+- **App state:** already running and authenticated | missing → blocker
+- **Forbidden lifecycle/orientation action attempted:** no (required)
 
-| # | Finding | File / location | Severity | Adjudication | Owner |
+| ID | Story / AC | Result | Screenshot/accessibility evidence | Severity | Owner |
 |---|---|---|---|---|---|
-| X1 | <what can go wrong, why this path is vulnerable, impact> | <path:line> | blocker/major/minor | agreed / disputed-conceded / disputed-revised / disputed-escalated | frontend/ios/flutter/backend |
+| M1 | US-1 / Scenario | pass/fail | <evidence> | <severity> | ios/flutter |
 
-*If Codex was not reachable:* `Codex unavailable — not run.` The other three verifiers still gate the
-code; this does not block shipping.
+## Cross-host peer review
 
-### Disputes  (verbatim — do not summarise away)
+- **Leader:** <host>
+- **Reviewer:** <host/model/effort/session>
+- **Artifact hash:** <branch diff SHA-256>
+- **Fallback reason:** <none or exact reason>
 
-**X1 — <title>**
-- **Codex:** <finding, verbatim>
-- **Challenge:** <objection> — cited: `<path:line>`
-- **Codex reply:** concede | hold | revise — <verbatim reasoning>
-- **Result:** dropped | stands at <severity> | **unresolved → user**
+| ID | Finding | File / line | Severity | Rebuttal result | Owner |
+|---|---|---|---|---|---|
+| X1 | <finding> | <path:line> | <severity> | agreed/conceded/revised/unresolved | frontend/ios/flutter/backend |
 
-## Routed fixes  (orchestrator)
-| Fix | From finding | Routed to | Maps to AC | Status |
+An unavailable independent and fallback reviewer produces `HUMAN_GATE`; it blocks automated shipping.
+
+## Routed fixes
+
+| Fix | Source | Routed to | Maps to AC | Status |
 |---|---|---|---|---|
-| <description> | C1 / Q1 / A1 / X1 | frontend/ios/flutter/backend | US-n / Scenario | open/fixed |
+| <description> | C1/Q1/A1/M1/X1/gate row | frontend/ios/flutter/backend | <scenario> | open/fixed |
 
 ## Loop status
-- Round <n> of max 3. Next: <re-review / report to user / backward handoff to PM>.
+
+Round <n> of 3. Next: re-review | green report | NOT SHIPPABLE.

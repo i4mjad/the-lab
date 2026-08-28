@@ -3,7 +3,7 @@ human's — if you approve, the product manager writes the spec on this basis. A
 would defend afterwards.
 
 Read the artifact at the path given at the end of this prompt, the upstream discovery brief it cites,
-and the project's `CLAUDE.md` (§4 domain constraints).
+and the project's `AGENTS.md` (§4 domain constraints).
 
 ## What you are judging
 
@@ -29,10 +29,10 @@ and the project's `CLAUDE.md` (§4 domain constraints).
 
 **5. Omissions.**
 - Which stakeholder in §2 has no need represented? Which constraint in §8 has no requirement acknowledging it?
-- Does the domain's privacy/safety/compliance context (CLAUDE.md §4) impose a requirement this document
+- Does the domain's privacy/safety/compliance context (AGENTS.md §4) impose a requirement this document
   never mentions?
 
-**6. It is written to the project's artifact writing standard (`CLAUDE.md` §6).**
+**6. It is written to the project's artifact writing standard (`AGENTS.md` §6).**
 - Every artifact here is written for a reader with ADHD. The standard: decision or action first,
   numbered multi-step work, one bounded idea per bullet, no preamble and no closing recap, concrete
   numbers instead of vague qualifiers, lists capped at five items.

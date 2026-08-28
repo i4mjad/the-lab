@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .codex/guard-writes.sh",
+            "timeout": 10,
+            "statusMessage": "Checking The Lab write boundaries"
+          }
+        ]
+      }
+    ]
+  }
+}

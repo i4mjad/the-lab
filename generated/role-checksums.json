@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "catalogSha256": "47855e7c124565e2d97d2afb7bad5621234e2432bfd27f8a7750913864cc9c0a",
+  "roles": {
+    "discovery": {
+      "source": "roles/discovery.md",
+      "sourceSha256": "a5eeef108ed144d607ce2e2b51f38be3aaaf46ec7b85e29efb710487c52dee30",
+      "claudeSha256": "2967d1ac82ce65c10bdf75967d9891a389f634e2da8bdd51a2e11b0803f35aea",
+      "codexSha256": "47d82fa48e7ac6a3a430ac013fc1e718cd8d43f1efeb3cef7eefb4b1af056a7c"
+    },
+    "business-analyst": {
+      "source": "roles/business-analyst.md",
+      "sourceSha256": "d51632ce181a09c5b08e87e0bbe0c18ad446d7d15f459553972401ada3b75548",
+      "claudeSha256": "5d541b3cdb56e0f32568465815988b5194da84cbc4135d59a41404cdc6677d7d",
+      "codexSha256": "8d573d216fd04ddfeaedc642fb4cbae4f11da8fbf4c615571e0aba4cab263d0a"
+    },
+    "product-manager": {
+      "source": "roles/product-manager.md",
+      "sourceSha256": "5cf4f376443d3606e8ca191def1413760bf6e461f66d1362fc6b5f762a2d93d5",
+      "claudeSha256": "4ea0bf083a325c354f065ffac1ee40e5d31361270386781d30cf34a3ba6adbcb",
+      "codexSha256": "2abbb787231c1a663bc82bcc58d8c41ed1fcc4c5443a8a912f94fee6134be998"
+    },
+    "architect": {
+      "source": "roles/architect.md",
+      "sourceSha256": "12de6452f63997824b4b639b04c709df510ea9e0c6b27bdf0f6a49d0b62d9228",
+      "claudeSha256": "165fadfb8e38b7e6af27ac94aba94218a4ae99d98cfed8ff5d96ca8318e5bfd3",
+      "codexSha256": "6dd0b3695020ba2c232a6341455325928cc3e17e147a63f92bb4bfaec8a7b48f"
+    },
+    "designer": {
+      "source": "roles/designer.md",
+      "sourceSha256": "7a48d27d7b197f81eba56931e1aca8009b1646030e6432240aaa0f8a518cc3cc",
+      "claudeSha256": "f914049bf504557940a53f8fbc75e5fc698b1a9bd1ee26d9680bf17f58628677",
+      "codexSha256": "2ecf4fc7f4590677a336f87d2595697a3871f58ff193e1ce6497c4c19283cc2b"
+    },
+    "frontend": {
+      "source": "roles/frontend.md",
+      "sourceSha256": "130eca3b610c6d6a35dfcefcf128c14161acc611b93f2dccce03e4fc68d7949b",
+      "claudeSha256": "5a0d5e8714bc84e0bbbc530d42f7867f68353ecab7985cdcf0d85f3b0d6528d0",
+      "codexSha256": "04b317ba234b084424475d34f47faf43832e65d097cca0a674142c835dfb3e3f"
+    },
+    "ios": {
+      "source": "roles/ios.md",
+      "sourceSha256": "f482ebcdd3d4045f5681ac9b9bc4753ee9759be1887535520ae18c8673a506b7",
+      "claudeSha256": "7f1cd0f5099c10a2fd06784ffdfee2e266b2323c82326e677f337da70705b894",
+      "codexSha256": "38f60967415957afc4d190374c242ef8faaa2f6832eb02fe87a6ec5acd3c1682"
+    },
+    "flutter": {
+      "source": "roles/flutter.md",
+      "sourceSha256": "0e784a8a536540e01ac795666620b29302e77184dabb128c9cc439c391357b63",
+      "claudeSha256": "232304c6208f24636ac976512a53a87bab270dd932e68efb7ac3ad9a124c5032",
+      "codexSha256": "9eec0d3b45f6456fff210301603f78df52d6c382fa6f480f243d4e4e0d7f11d6"
+    },
+    "backend": {
+      "source": "roles/backend.md",
+      "sourceSha256": "0d4dfb85c5de48aa239ff8de42ab3926da705aed28c899756ff49d81a0702c8f",
+      "claudeSha256": "a6ac098873e92b6fc9cfe07127042b5069f263b0b906567f8d1df7b4307cc6e9",
+      "codexSha256": "acdd2faba72ae3c026daa6801282b6e20b1806034fb28c8dc369352d97d28ad0"
+    },
+    "code-reviewer": {
+      "source": "roles/code-reviewer.md",
+      "sourceSha256": "c994ff6cbc4c5143c01a4ff865defbcd10c5d5efad92ceb8a69a7fe7b3c14084",
+      "claudeSha256": "ff0c440fdc6779ad63642180bf9165597858565544c09cc9f2c13a11aa8df30e",
+      "codexSha256": "9c75f6740dc23ba239308bafc56fe42c63aec75e9423754bae3fd75cfa00d1b6"
+    },
+    "qa-tester": {
+      "source": "roles/qa-tester.md",
+      "sourceSha256": "19df428ab64e80bb5d519a1ab7daf2551be6aea715b30dbd1d550afe6a7499a9",
+      "claudeSha256": "13272267bcfb056d6d834405eff5a76748726cdda9c5f3eae26d59e3ab1f0f7d",
+      "codexSha256": "198d4f0285bcebd1f0b1ef2566c738e4a2b038c59ac5f881f7451494be0296e1"
+    },
+    "api-tester": {
+      "source": "roles/api-tester.md",
+      "sourceSha256": "fe1365f4cb2439708781f7b30e3ff81e5a3051bc2f2859d1b73336b4558e8d60",
+      "claudeSha256": "d4f042b3f25f7b97515261915c096729c2c720bad379326ae49779d44d392dea",
+      "codexSha256": "8bf26a9e09bb0253ac3ab16a51aba4f2296235ff8671c378f1affecf6ebb8b65"
+    },
+    "mobile-qa": {
+      "source": "roles/mobile-qa.md",
+      "sourceSha256": "2f76f876c07660ca59a9ad52627db4e4268d735eff10967d2f55d485a765beb0",
+      "claudeSha256": "8676e6b47b9923f281e3f7ab1bf499ce21fc281784db23ca04aa4fb97a5b3653",
+      "codexSha256": "7690911df2d44be62c6d01e9564de1a430edfeab6c2b94796be74eadaaf09056"
+    },
+    "peer-reviewer": {
+      "source": "roles/peer-reviewer.md",
+      "sourceSha256": "857c902083b1546449f9f52dbc27cc827aada2eca599d765135179b0927d6f2b",
+      "claudeSha256": "697730e08c5a4e023e3521df3c530ff64b0e2304b3594ffecc4610ae54b297ab",
+      "codexSha256": "6163c6c7ccc60fcbc8d77110ac8c5221eecb5221f32baccce9250b8d7694d9be"
+    }
+  }
+}

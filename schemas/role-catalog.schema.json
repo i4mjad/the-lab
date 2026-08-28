@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "The Lab canonical role catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "roles"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "roles": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "source", "description", "phase", "claudeTools", "sandboxMode", "writePolicy", "automaticSkills", "optionalSkills"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+          "source": { "type": "string", "pattern": "^roles/.+\\.md$" },
+          "description": { "type": "string", "minLength": 20 },
+          "phase": { "type": "string" },
+          "claudeTools": { "type": "string" },
+          "sandboxMode": { "enum": ["read-only", "workspace-write"] },
+          "writePolicy": { "enum": ["none", "documents", "application"] },
+          "automaticSkills": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "optionalSkills": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+        }
+      }
+    }
+  }
+}

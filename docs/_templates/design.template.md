@@ -2,7 +2,7 @@
 
 - **Slug:** <slug>
 - **Source spec:** docs/product/<slug>-product-spec.md · docs/architecture/<slug>/spec.md
-- **Target platforms:** <web / iOS / Flutter — only those in CLAUDE.md §5>
+- **Target platforms:** <web / iOS / Flutter — only those in AGENTS.md §5>
 - **Design system:** <existing system/tokens reused, or "none yet — this establishes it">
 
 > Written by the designer, implemented by the client agents. A contract, not an essay: every
@@ -18,7 +18,7 @@
 - **Components:** <reused components/tokens; anything new, defined here>
 - **States:** <default · empty · loading · error — all four, per screen>
 - **Interaction & motion:** <triggers, transitions, feedback>
-- **RTL / i18n:** <mirroring, text expansion, locale specifics per CLAUDE.md §4>
+- **RTL / i18n:** <mirroring, text expansion, locale specifics per AGENTS.md §4>
 
 ## Tokens
 <Color / type / spacing used — reference the design system; list only deltas/new tokens.>

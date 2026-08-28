@@ -24,6 +24,8 @@
 - **Tasks done:** <ids>
 - **What was built:** <summary>
 - **AC covered:** <story/scenario → where it's satisfied>
+- **Test evidence:** <test results per AC — required>
+- **Metrics:** <output of `QUICK=1 ./quality-gate.sh web` — required; missing configuration is FAIL>
 - **How to run / preview:** <commands / URL / steps qa-tester will use>
 - **Integration notes for backend:** <contracts consumed, expectations>
 
@@ -34,6 +36,7 @@
 - **What was built:** <summary>
 - **AC covered:** <story/scenario → where it's satisfied>
 - **Test evidence:** <XCTest/XCUITest results per AC — required; qa-tester cannot reach native clients>
+- **Metrics:** <output of `QUICK=1 ./quality-gate.sh ios` — required; missing configuration is FAIL>
 - **How to run / preview:** <scheme / simulator steps>
 - **Integration notes for backend:** <contracts consumed, expectations>
 
@@ -44,6 +47,7 @@
 - **What was built:** <summary>
 - **AC covered:** <story/scenario → where it's satisfied>
 - **Test evidence:** <widget/integration test results per AC — required; qa-tester cannot reach native clients>
+- **Metrics:** <output of `QUICK=1 ./quality-gate.sh flutter` — required; missing configuration is FAIL>
 - **How to run / preview:** <flavor / device steps>
 - **Integration notes for backend:** <contracts consumed, expectations>
 
@@ -53,6 +57,8 @@
 - **Tasks done:** <ids>
 - **Endpoints / contracts:** <method + path + purpose, or schema/rules for BaaS>
 - **AC covered:** <story/scenario → endpoint>
+- **Test evidence:** <test results per AC — required>
+- **Metrics:** <output of `QUICK=1 ./quality-gate.sh backend` — required; missing configuration is FAIL>
 - **How to run / test:** <commands / base URL / auth steps api-tester will use>
 - **Integration notes for clients:** <request/response shapes, auth>
 

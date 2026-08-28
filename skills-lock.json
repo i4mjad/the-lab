@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "manifestSha256": "1dbe0e5aa6a2087e8a1826cabf4783cd3027ea3e3e4e1351e536867284e474e3",
+  "dependencies": [
+    {
+      "id": "i-have-adhd",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/ayghri/i-have-adhd"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "cbe69fb83c08a37cf54d5ec9ec6bb88c8bc9973c"
+      }
+    },
+    {
+      "id": "grilling",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "architecture-designer",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/Jeffallan/claude-skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "882ef55e377dbf9a4dbe496bb41ac6ccd0e555cf"
+      }
+    },
+    {
+      "id": "tdd",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "code-review",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "api-testing",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/secondsky/claude-skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "ad16332a30363b7cc13aa97baac3edeb8c9cc558"
+      }
+    },
+    {
+      "id": "accessibility",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/addyosmani/web-quality-skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "afa8da942115f2961fdbfa80807ea0b232ff6c00"
+      }
+    },
+    {
+      "id": "grill-me",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "to-spec",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "to-tickets",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "wayfinder",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/mattpocock/skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+      }
+    },
+    {
+      "id": "swiftui-expert-skill",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/AvdLee/SwiftUI-Agent-Skill"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "4c6a97d15aa5e023538c3cb06b5192f241dd451d"
+      }
+    },
+    {
+      "id": "flutter-official",
+      "license": "BSD-3-Clause",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/flutter/agent-plugins"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "864cf8797b190ddb81e4875db6dd6bab89641f62"
+      }
+    },
+    {
+      "id": "supabase",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/supabase/agent-skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "8331f910845103c08d51f6ca1d86ebb7d1f745e3"
+      }
+    },
+    {
+      "id": "firebase",
+      "license": "Apache-2.0",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/firebase/agent-skills"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "a0b4e143f40c1ebe05fe5f9a4787fecd4da8f478"
+      }
+    },
+    {
+      "id": "dotnet-clean-arch",
+      "license": "NOASSERTION",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/i4mjad/dotnet-clean-arch-skill"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "92ba2b7d2611b75255811df3df0e168bfa4c1b20"
+      }
+    },
+    {
+      "id": "tailwind-design-system",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/wshobson/agents"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "38e19c20d2b154510b0e624a2e3e186b19b5c527"
+      }
+    },
+    {
+      "id": "design-taste-frontend",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/Leonxlnx/taste-skill"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "ccbc15639c97057cbfcf32ecebc38ef716e4bb37"
+      }
+    },
+    {
+      "id": "high-end-visual-design",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/Leonxlnx/taste-skill"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "ccbc15639c97057cbfcf32ecebc38ef716e4bb37"
+      }
+    },
+    {
+      "id": "code-review-graph",
+      "license": "MIT",
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/tirth8205/code-review-graph"
+      },
+      "resolved": {
+        "kind": "commit",
+        "value": "b58668751ab0c7670c078cf7cbd4d1f5b8e54f81"
+      }
+    },
+    {
+      "id": "mobile-mcp",
+      "license": "Apache-2.0",
+      "source": {
+        "kind": "npm",
+        "url": "https://www.npmjs.com/package/@mobilenext/mobile-mcp"
+      },
+      "resolved": {
+        "kind": "version",
+        "value": "1.0.2",
+        "integrity": "sha512-EVWH2dLOL69Ur1HZn7g5oPEhVnCbpyoZdKLKUAjQWh5JGn9i10OU6TrS+onInzUeRWFJY18M7Cnha4Q+LgxzKA=="
+      }
+    },
+    {
+      "id": "reui",
+      "license": "Proprietary",
+      "source": {
+        "kind": "service",
+        "url": "https://mcp.reui.io"
+      },
+      "resolved": {
+        "kind": "endpoint",
+        "value": "https://mcp.reui.io"
+      }
+    },
+    {
+      "id": "figma",
+      "license": "Proprietary",
+      "source": {
+        "kind": "service",
+        "url": "https://www.figma.com"
+      },
+      "resolved": {
+        "kind": "user-configured",
+        "value": "official-connector"
+      }
+    },
+    {
+      "id": "mobbin",
+      "license": "Proprietary",
+      "source": {
+        "kind": "service",
+        "url": "https://mobbin.com"
+      },
+      "resolved": {
+        "kind": "user-configured",
+        "value": "mcp"
+      }
+    },
+    {
+      "id": "refactoring-ui",
+      "license": "NOASSERTION",
+      "source": {
+        "kind": "service",
+        "url": "https://github.com/gnurio/refactoring-ui-plugin"
+      },
+      "resolved": {
+        "kind": "user-configured",
+        "value": "review-before-install"
+      }
+    }
+  ]
+}

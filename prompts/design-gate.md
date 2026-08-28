@@ -4,7 +4,7 @@ mockups: whatever it fails to specify, a build agent will invent. Approve only w
 afterwards.
 
 Read the artifact at the path given at the end of this prompt, the product spec and architecture spec
-it cites, and the project's `CLAUDE.md` (§4 localization/RTL and domain constraints, §5 platforms).
+it cites, and the project's `AGENTS.md` (§4 localization/RTL and domain constraints, §5 platforms).
 
 ## What you are judging
 
@@ -19,7 +19,7 @@ it cites, and the project's `CLAUDE.md` (§4 localization/RTL and domain constra
 - Are the states specified concretely (what is on screen, what the user can do), or named and left blank?
 
 **3. Platform honesty.**
-- Are the target platforms exactly those in `CLAUDE.md` §5 — no more, no fewer?
+- Are the target platforms exactly those in `AGENTS.md` §5 — no more, no fewer?
 - Does "per-platform divergence" state real divergence, or does it flatten iOS/Flutter/web into one
   layout that will not work natively on one of them?
 
@@ -29,7 +29,7 @@ it cites, and the project's `CLAUDE.md` (§4 localization/RTL and domain constra
 - Are tokens referenced by name rather than hardcoded values scattered through the screens?
 
 **5. RTL, i18n, and accessibility.**
-- If `CLAUDE.md` §4 declares RTL or multi-locale support, does each screen state its mirroring and text
+- If `AGENTS.md` §4 declares RTL or multi-locale support, does each screen state its mirroring and text
   expansion behavior? Silence here is a defect, not a default.
 - Are focus order, touch-target sizing, and contrast addressed anywhere, or left entirely to the build agents?
 
@@ -37,7 +37,7 @@ it cites, and the project's `CLAUDE.md` (§4 localization/RTL and domain constra
 - Could a competent engineer build each screen from this text alone without asking a question? Where
   the answer is no, that gap is the finding — quote the vague line.
 
-**7. It is written to the project's artifact writing standard (`CLAUDE.md` §6).**
+**7. It is written to the project's artifact writing standard (`AGENTS.md` §6).**
 - Every artifact here is written for a reader with ADHD. The standard: decision or action first,
   numbered multi-step work, one bounded idea per bullet, no preamble and no closing recap, concrete
   numbers instead of vague qualifiers, lists capped at five items.

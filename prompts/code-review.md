@@ -21,6 +21,8 @@ Do NOT report:
 - style, formatting, or naming preferences
 - low-value cleanup or speculative concerns without evidence
 - anything you cannot point to a specific file and line for
+- restatements of metrics the project's quality-gate.sh already enforces mechanically (coverage,
+  complexity, module size, dependency rules, mutation score) — find what metrics can't
 
 Every finding must answer: what can go wrong, why is this code path vulnerable, what is the likely
 impact, and what concrete change reduces the risk. Prefer one strong finding over several weak ones —

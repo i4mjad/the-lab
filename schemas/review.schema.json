@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Codex review output — used for both spec-gate reviews (docs) and adversarial code review. quote applies to document gates; file/line_start/line_end apply to code review. OpenAI structured outputs requires EVERY property to be listed in `required`, so fields that do not apply to a given mode are nullable rather than optional — send null, not an omitted key. Do not add minLength/minimum/maximum here; they are rejected.",
+  "description": "Host-neutral independent review output for all five artifact gates and adversarial code review. Fields that do not apply are nullable for cross-host structured-output compatibility.",
   "type": "object",
   "additionalProperties": false,
   "required": ["verdict", "summary", "findings", "next_steps"],
@@ -44,6 +44,8 @@
           "recommendation": { "type": "string" },
           "confidence": {
             "type": "number",
+            "minimum": 0,
+            "maximum": 1,
             "description": "0 to 1. Keep it honest — you will be asked to defend this finding."
           },
           "quote": {

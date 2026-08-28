@@ -1,0 +1,160 @@
+{
+  "$schema": "../schemas/role-catalog.schema.json",
+  "schemaVersion": 1,
+  "roles": [
+    {
+      "id": "discovery",
+      "source": "roles/discovery.md",
+      "description": "Challenges value, viability, usability, and feasibility and returns GO, PIVOT, or KILL before requirements work starts.",
+      "phase": "discovery",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, AskUserQuestion",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "documents",
+      "automaticSkills": ["grilling"],
+      "optionalSkills": []
+    },
+    {
+      "id": "business-analyst",
+      "source": "roles/business-analyst.md",
+      "description": "Turns a validated idea into solution-agnostic business requirements and measurable outcomes.",
+      "phase": "requirements",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, AskUserQuestion",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "documents",
+      "automaticSkills": ["grilling"],
+      "optionalSkills": ["grill-me", "wayfinder"]
+    },
+    {
+      "id": "product-manager",
+      "source": "roles/product-manager.md",
+      "description": "Turns approved requirements into v1 scope, user stories, and verifiable acceptance criteria without choosing implementation.",
+      "phase": "product",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, AskUserQuestion",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "documents",
+      "automaticSkills": ["grilling"],
+      "optionalSkills": ["to-spec", "to-tickets"]
+    },
+    {
+      "id": "architect",
+      "source": "roles/architect.md",
+      "description": "Turns the product spec into technical decisions and owner-tagged build tasks.",
+      "phase": "architecture",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, AskUserQuestion",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "documents",
+      "automaticSkills": ["architecture-designer"],
+      "optionalSkills": []
+    },
+    {
+      "id": "designer",
+      "source": "roles/designer.md",
+      "description": "Produces the platform-aware design contract for UI initiatives after architecture approval.",
+      "phase": "design",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, AskUserQuestion",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "documents",
+      "automaticSkills": [],
+      "optionalSkills": ["design-taste-frontend", "high-end-visual-design", "figma", "mobbin", "reui", "refactoring-ui"]
+    },
+    {
+      "id": "frontend",
+      "source": "roles/frontend.md",
+      "description": "Implements web tasks tagged owner: frontend and proves their acceptance criteria with tests and metrics.",
+      "phase": "build",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, Bash",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "application",
+      "automaticSkills": ["tdd", "accessibility"],
+      "optionalSkills": ["tailwind-design-system"]
+    },
+    {
+      "id": "ios",
+      "source": "roles/ios.md",
+      "description": "Implements native SwiftUI tasks tagged owner: ios and proves their acceptance criteria with tests and metrics.",
+      "phase": "build",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, Bash",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "application",
+      "automaticSkills": ["tdd", "swiftui-expert-skill"],
+      "optionalSkills": []
+    },
+    {
+      "id": "flutter",
+      "source": "roles/flutter.md",
+      "description": "Implements Flutter tasks tagged owner: flutter using the official Flutter skill suite and project quality bars.",
+      "phase": "build",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, Bash",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "application",
+      "automaticSkills": ["tdd", "flutter-official"],
+      "optionalSkills": []
+    },
+    {
+      "id": "backend",
+      "source": "roles/backend.md",
+      "description": "Implements backend tasks tagged owner: backend with validation, authorization, tests, and measurable quality bars.",
+      "phase": "build",
+      "claudeTools": "Read, Write, Edit, Grep, Glob, Bash",
+      "sandboxMode": "workspace-write",
+      "writePolicy": "application",
+      "automaticSkills": ["tdd"],
+      "optionalSkills": ["dotnet-clean-arch", "supabase", "firebase"]
+    },
+    {
+      "id": "code-reviewer",
+      "source": "roles/code-reviewer.md",
+      "description": "Performs a read-only correctness and maintainability review and returns owner-tagged findings.",
+      "phase": "verify",
+      "claudeTools": "Read, Grep, Glob, Bash(git diff:*), Bash(git status:*)",
+      "sandboxMode": "read-only",
+      "writePolicy": "none",
+      "automaticSkills": ["code-review"],
+      "optionalSkills": ["code-review-graph"]
+    },
+    {
+      "id": "qa-tester",
+      "source": "roles/qa-tester.md",
+      "description": "Browser-tests applicable Gherkin acceptance criteria and returns evidence without editing the product.",
+      "phase": "verify",
+      "claudeTools": "Read, Grep, Glob, mcp__playwright__*",
+      "sandboxMode": "read-only",
+      "writePolicy": "none",
+      "automaticSkills": [],
+      "optionalSkills": []
+    },
+    {
+      "id": "api-tester",
+      "source": "roles/api-tester.md",
+      "description": "Exercises API scenarios, validation, error handling, authentication, and authorization without editing code.",
+      "phase": "verify",
+      "claudeTools": "Read, Grep, Glob, Bash",
+      "sandboxMode": "read-only",
+      "writePolicy": "none",
+      "automaticSkills": ["api-testing"],
+      "optionalSkills": []
+    },
+    {
+      "id": "mobile-qa",
+      "source": "roles/mobile-qa.md",
+      "description": "Attach-only mobile QA on an already running authenticated app, with destructive device and app lifecycle tools unavailable.",
+      "phase": "verify",
+      "claudeTools": "Read, Grep, Glob, mcp__mobile-mcp__mobile_list_available_devices, mcp__mobile-mcp__mobile_get_screen_size, mcp__mobile-mcp__mobile_get_orientation, mcp__mobile-mcp__mobile_take_screenshot, mcp__mobile-mcp__mobile_save_screenshot, mcp__mobile-mcp__mobile_list_elements_on_screen, mcp__mobile-mcp__mobile_click_on_screen_at_coordinates, mcp__mobile-mcp__mobile_double_tap_on_screen, mcp__mobile-mcp__mobile_long_press_on_screen_at_coordinates, mcp__mobile-mcp__mobile_swipe_on_screen, mcp__mobile-mcp__mobile_type_keys",
+      "sandboxMode": "read-only",
+      "writePolicy": "none",
+      "automaticSkills": [],
+      "optionalSkills": []
+    },
+    {
+      "id": "peer-reviewer",
+      "source": "roles/peer-reviewer.md",
+      "description": "Adjudicates a schema-validated cross-host review, runs one evidence-based rebuttal round, and never edits the reviewed artifact.",
+      "phase": "gate-and-verify",
+      "claudeTools": "Read, Grep, Glob, Bash(node *review-bridge.mjs:*)",
+      "sandboxMode": "read-only",
+      "writePolicy": "none",
+      "automaticSkills": [],
+      "optionalSkills": []
+    }
+  ]
+}

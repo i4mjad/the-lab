@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Codex's response to a peer's challenge of its findings. One entry per disputed finding. OpenAI structured outputs requires EVERY property to be listed in `required`, so the revise-only fields are nullable rather than optional — send null when position is not `revise`. Do not add minItems/minLength here; they are rejected.",
+  "description": "The independent reviewer's same-session response to a peer challenge. One entry per disputed finding. Structured-output compatibility requires every property in `required`, so revise-only fields are nullable.",
   "type": "object",
   "additionalProperties": false,
   "required": ["responses"],

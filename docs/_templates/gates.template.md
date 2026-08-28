@@ -1,74 +1,51 @@
 # Gate log — <initiative title>
 
 - **Slug:** <slug>
-- **Written by:** orchestrator (`/feature`) — the only writer of this file
-- **What this is:** the audit trail that replaces human approval on the four spec gates. Codex reviews
-  the artifact, codex-reviewer challenges the review, and the exchange is recorded here.
+- **Written by:** orchestrator (`$feature` or `/the-lab:feature`), the only writer
+- **Leader host:** Claude Code | Codex
+- **What this is:** immutable audit trail for five cross-model artifact gates
 
-> One section per gate, appended as the pipeline advances. Never rewrite a closed gate — a later round
-> is a new subsection, so the disagreement history stays readable.
+> Append one section per round. Never rewrite a closed round. The JSONL companion is the
+> machine-readable source for reviewer metadata and schema-valid findings. A rebuttal closes only
+> when its `adjudicated-final` event records surviving findings, disputes, replies, and final verdict.
 
----
+## Gate: <discovery | requirements | product | architecture | design> · round <n>
 
-## Gate: discovery · round <n>
+- **Artifact:** `<path>`
+- **Artifact SHA-256:** `<hash>`
+- **Reviewer:** `<host>` / `<model>` / `<effort>` / session `<id>`
+- **Attempts:** `<preflight/retry/fallback status>`
+- **Fallback reason:** `<none or exact error>`
+- **Verdict:** APPROVE | NEEDS_ATTENTION | HUMAN_GATE
+- **Outcome:** advanced | returned to `<owner>` | escalated to user
+- **Summary:** <reviewer summary>
 
-- **Artifact:** `docs/discovery/<slug>.md`
-- **Reviewed revision:** `<git hash-object output>` — the verdict below is valid only for these bytes.
-  Re-hash before advancing; a mismatch means the artifact changed after approval and the gate must re-run.
-- **Verdict:** APPROVE | NEEDS-ATTENTION | CODEX-UNAVAILABLE → human gate
-- **Outcome:** advanced | sent back to discovery | escalated to user
-- **Codex summary:** <verbatim>
-
-| # | Sev | Finding | Location | Adjudication | Result |
+| ID | Severity | Finding | Evidence | Adjudication | Result |
 |---|---|---|---|---|---|
-| X1 | blocker/major/minor | <title> | <quote or §n> | agreed / disputed-conceded / disputed-revised / disputed-escalated | routed / dropped / open |
+| X1 | blocker/major/minor | <title> | <artifact quote/section> | agreed / conceded / revised / unresolved | routed / dropped / human gate |
 
-The table is the index. Each routed finding also needs its full text — the fix is routed from these,
-not from the title:
+### Full findings
 
-**X1 — <title>** · <severity> · <location>
-- **What Codex found:** <body, verbatim>
-- **Recommended fix:** <recommendation, verbatim>
+**X1 — <title>** · <severity>
 
-### Disputes
+- **Body:** <verbatim structured finding>
+- **Recommendation:** <verbatim structured recommendation>
+- **Confidence:** <0–1>
+
+### One rebuttal round
 
 **X1 — <title>**
-- **Codex:** <the finding, verbatim>
-- **Challenge (codex-reviewer):** <objection> — cited: <artifact line or path:line>
-- **Codex reply:** concede | hold | revise — <verbatim reasoning>
-- **Result:** dropped | stands at <severity> | **unresolved → user**
 
-### Unresolved → user
-
-| # | Codex position | Peer position | User decision |
-|---|---|---|---|
-| X1 | <one line> | <one line> | pending / upheld / dismissed |
-
----
-
-## Gate: requirements · round <n>
-
-<same shape — artifact `docs/requirements/<slug>-business-requirements.md`>
-
----
-
-## Gate: product · round <n>
-
-<same shape — artifact `docs/product/<slug>-product-spec.md`>
-
----
-
-## Gate: design · round <n>   *(UI initiatives only)*
-
-<same shape — artifact `docs/design/<slug>/design.md`>
-
----
+- **Peer dispute:** <objection with artifact line or path:line>
+- **Reviewer reply in session `<id>`:** concede | hold | revise — <reasoning>
+- **Result:** dropped | stands at <severity> | unresolved → human gate
 
 ## Gate summary
 
-| Gate | Rounds | Final verdict | Escalated to user |
-|---|---|---|---|
-| discovery | <n> | APPROVE / … | none / X1 |
-| requirements | <n> | … | … |
-| product | <n> | … | … |
-| design | <n> / n/a | … | … |
+| Gate | Rounds | Artifact hash | Reviewer | Final verdict |
+|---|---:|---|---|---|
+| discovery | <n> | <hash> | <host/model> | <verdict> |
+| requirements | <n> | <hash> | <host/model> | <verdict> |
+| product | <n> | <hash> | <host/model> | <verdict> |
+| architecture | <n> | <hash> | <host/model> | <verdict> |
+| design | <n or n/a> | <hash or n/a> | <host/model or n/a> | <verdict or n/a> |

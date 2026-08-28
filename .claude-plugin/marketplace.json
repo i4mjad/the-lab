@@ -1,18 +1,18 @@
 {
   "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/refs/heads/main/marketplace/marketplace.schema.json",
-  "name": "cc-setup",
-  "description": "A reusable discovery→build→verify agent team plus a stack-aware skill set, driven by the /feature pipeline.",
+  "name": "the-lab",
+  "description": "المعمل — The Lab: one discovery-to-delivery workflow for Claude Code and Codex.",
   "owner": {
     "name": "i4mjad",
     "url": "https://github.com/i4mjad"
   },
   "plugins": [
     {
-      "name": "cc-setup",
-      "description": "13-agent discovery→build→verify pipeline orchestrated by /feature, with an /initialize scaffolder and stack-keyed specialist skills.",
+      "name": "the-lab",
+      "description": "14 generated specialists, five cross-model artifact gates, mandatory metrics, and attach-only mobile QA.",
       "source": "./",
       "category": "workflow",
-      "keywords": ["pipeline", "agents", "discovery", "requirements", "review", "scaffold", "clean-architecture"]
+      "keywords": ["pipeline", "agents", "codex", "claude-code", "review", "quality"]
     }
   ]
 }

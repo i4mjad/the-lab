@@ -1,12 +1,13 @@
 {
-  "name": "cc-setup",
-  "version": "0.10.0",
-  "description": "Discovery→build→verify agent team (13 specialists) orchestrated by the /feature skill, with an /initialize project scaffolder and a stack-keyed specialist skill set (e.g. /dotnet-clean-arch for .NET backends).",
+  "name": "the-lab",
+  "version": "1.0.0",
+  "description": "المعمل — The Lab: a dual-host discovery-to-delivery system with 14 generated specialist roles, five cross-model artifact gates, measurable quality gates, and attach-only mobile QA.",
   "author": {
     "name": "i4mjad",
     "url": "https://github.com/i4mjad"
   },
-  "repository": "https://github.com/i4mjad/cc-setup",
+  "homepage": "https://github.com/i4mjad/the-lab",
+  "repository": "https://github.com/i4mjad/the-lab",
   "license": "MIT",
-  "keywords": ["pipeline", "agents", "discovery", "requirements", "product-spec", "architecture", "code-review", "qa", "scaffold", "clean-architecture"]
+  "keywords": ["pipeline", "agents", "codex", "claude-code", "discovery", "architecture", "code-review", "quality-gate"]
 }

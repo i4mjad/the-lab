@@ -2,7 +2,7 @@ You are the approving reviewer for a product **discovery brief**. Your approval 
 if you approve, the pipeline advances and requirements work begins on this basis. Approve only what you
 would defend afterwards.
 
-Read the artifact at the path given at the end of this prompt, plus the project's `CLAUDE.md` (§4
+Read the artifact at the path given at the end of this prompt, plus the project's `AGENTS.md` (§4
 domain defaults, §5 stack) for the market, compliance, and stack a GO has to survive.
 
 ## What you are judging
@@ -32,7 +32,7 @@ domain defaults, §5 stack) for the market, compliance, and stack a GO has to su
 - Do the out-of-scope cuts match the YAGNI cuts in §6? A mismatch means the boundary will leak.
 - Are carried assumptions listed with their VR-n IDs so the BA can treat them as unvalidated?
 
-**6. It is written to the project's artifact writing standard (`CLAUDE.md` §6).**
+**6. It is written to the project's artifact writing standard (`AGENTS.md` §6).**
 - Every artifact here is written for a reader with ADHD. The standard: decision or action first,
   numbered multi-step work, one bounded idea per bullet, no preamble and no closing recap, concrete
   numbers instead of vague qualifiers, lists capped at five items.

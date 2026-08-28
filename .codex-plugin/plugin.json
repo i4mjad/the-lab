@@ -1,0 +1,29 @@
+{
+  "name": "the-lab",
+  "version": "1.0.0",
+  "description": "المعمل — The Lab: a dual-host discovery-to-delivery system with 14 generated specialist roles, five cross-model artifact gates, measurable quality gates, and attach-only mobile QA.",
+  "author": {
+    "name": "i4mjad",
+    "url": "https://github.com/i4mjad"
+  },
+  "homepage": "https://github.com/i4mjad/the-lab",
+  "repository": "https://github.com/i4mjad/the-lab",
+  "license": "MIT",
+  "keywords": ["pipeline", "agents", "codex", "claude-code", "discovery", "architecture", "code-review", "quality-gate"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "المعمل — The Lab",
+    "shortDescription": "Cross-model discovery-to-delivery workflow",
+    "longDescription": "Run a governed discovery, requirements, product, architecture, design, build, and verification pipeline under Codex or Claude Code using one canonical role and dependency catalog.",
+    "developerName": "i4mjad",
+    "category": "Developer Tools",
+    "capabilities": ["Instructions", "Read", "Write"],
+    "websiteURL": "https://github.com/i4mjad/the-lab",
+    "defaultPrompt": [
+      "Use $initialize to scaffold The Lab in this project.",
+      "Use $feature to take this idea through discovery and delivery.",
+      "Use $peer-review for an independent read-only review."
+    ],
+    "brandColor": "#6D28D9"
+  }
+}

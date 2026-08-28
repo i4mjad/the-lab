@@ -1,6 +1,6 @@
 ---
 task: NN-<title>
-owner: frontend | backend
+owner: frontend | ios | flutter | backend
 slug: <slug>
 serves: US-<n> / Scenario <name>   # the story + AC this task satisfies
 status: todo | in-progress | done
@@ -25,7 +25,7 @@ Scenario: <name>
 - Out: <what NOT to build here — keep it SIMPLE>
 
 ## Notes
-<Contracts, data shapes, RTL/i18n, security/privacy (per CLAUDE.md §4), dependencies on the other owner.>
+<Contracts, data shapes, RTL/i18n, security/privacy (per AGENTS.md §4), dependencies on the other owner.>
 
 ## Definition of done
 - [ ] The AC above is satisfiable in the running app

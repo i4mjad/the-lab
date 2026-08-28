@@ -41,10 +41,10 @@ Scenario: <edge / failure path>
   Then <observable result>
 ```
 
-<Repeat per story. Each AC must be concretely verifiable by qa-tester (browser) and/or
-api-tester (endpoints).>
+<Repeat per story. Each AC must name its applicable verifier: qa-tester (browser), api-tester
+(endpoints), and/or attach-only mobile-qa (iOS/Flutter).>
 
 ## 5. Traceability
 | Story | Serves outcome | Verified by |
 |---|---|---|
-| US-1 | BO-1 | qa / api |
+| US-1 | BO-1 | qa / api / mobile-qa |

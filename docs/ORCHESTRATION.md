@@ -1,140 +1,71 @@
-# Orchestration — the agent pipeline
+# The Lab orchestration contract
 
-How the agent team runs. The **`/feature`** skill drives it (run by the main thread — there is no
-conductor agent). **Codex is the approval gate on the four spec artifacts; you are the gate on the two
-that need your knowledge, and the tie-breaker when Codex and Claude disagree.** See `CLAUDE.md` for the full governance and
-the plugin's `agents/` for each agent's contract.
+`AGENTS.md` is the project authority. `CLAUDE.md` imports it and contains Claude-only notes. The main
+host thread owns pipeline state, creates artifact files before dispatch, invokes specialists, records
+review logs, and routes findings. Specialists do not silently repair another role's artifact.
 
-## Pipeline
+## State machine
 
-```
-  ┌──── HUMAN GATE (new project) ────┐
-  bootstrap interview → fills CLAUDE.md §4/§5 ──▶ (skipped if already configured)
-   ┌ CODEX ──┐  ┌ CODEX ──┐   ┌ CODEX ──┐              ┌ CODEX, if UI ──┐
-discovery ─▶ business-analyst ─▶ product-manager ─▶ architect ─▶ designer ─▶ frontend ┐
-(GO/PIVOT/KILL)  (interviews)      (Gherkin AC)    (owner tags)  (design.md)  ios     │
-   │                                                                          flutter ├─▶ completion-report.md
-   └── KILL ──▶ pipeline stops; /feature reports the verdict                  backend ┘        │
-                                                                                               ▼
-   /feature consolidates → review.md  ◀── code-reviewer ‖ qa-tester ‖ api-tester ‖ codex-reviewer
-                                                                                               │
-              routed fixes ──▶ frontend / ios / flutter / backend ──▶ re-review
-                                                                                               │
-                              loop ≤ 3 rounds, then /feature reports to you
+```text
+preflight
+  ├─ missing writing standard / adapter drift / active quality config → BLOCKED
+  └─ ready → discovery
+       ├─ KILL → STOP (user override only)
+       └─ GO or PIVOT → discovery gate
+            → requirements gate → product gate → architecture gate
+            ├─ no UI → build
+            └─ UI → design gate → build
+                 → full quality + applicable reviewers
+                      ├─ blocker/major → owner fix → re-review (max 3)
+                      ├─ missing mobile session/reviewer routes → HUMAN_GATE or BLOCKED
+                      └─ green → merge using AGENTS.md §9
 ```
 
-**A codex gate is not a rubber stamp, and it is not a veto.** `/feature` dispatches **codex-reviewer**:
-Codex (GPT) reviews the artifact independently against a stage rubric, then codex-reviewer — Claude —
-reads the same artifact and challenges every finding, citing the line that defeats it. Disputes go back
-to the same Codex session for exactly one reply: concede, revise, or hold. Approve advances the pipeline
-with a one-line notice to you and no wait; needs-attention sends the artifact back to its author for up
-to 3 rounds; a held dispute comes to you as two positions with no recommendation. **If Codex is
-unreachable the gate reverts to a human gate** — nothing advances unreviewed. The whole exchange lands
-in `docs/reviews/<slug>/gates.md`.
+Large work may split into user-approved, independently shippable phases after discovery. Discovery is
+shared; each phase gets its own downstream artifacts and gates.
 
-**Discovery gates the whole pipeline.** Every initiative starts there: it steelmans the idea, then
-interrogates value → viability → usability → feasibility in that order and returns
-**GO / PIVOT / KILL** with falsifiable kill criteria. On KILL the pipeline stops — nothing reaches the
-business-analyst, and only you can overrule the verdict. On GO/PIVOT only the brief's **Handoff to BA**
-section crosses the gate; the rest is your decision record.
+## Gate matrix
 
-Only the client agents whose platform is set in CLAUDE.md §5 run (web→frontend, iOS→ios,
-Flutter→flutter); `backend` adapts to the one backend platform. `designer` runs only for UI initiatives.
+| Leader | Independent reviewer | Retry | Fresh fallback |
+|---|---|---:|---|
+| Claude Code | Codex `gpt-5.6-sol`, `xhigh` | once | Claude Opus, `xhigh` |
+| Codex | Claude Opus, `xhigh` | once | Codex `gpt-5.6-sol`, `xhigh` |
 
-**Large scope is phased by default.** After discovery, `/feature` sizes up what the v1 boundary left
-without being asked; if it's too big for one pass (typically a new project), it splits the work into an
-ordered set of shippable **phases** (`<project>-phase-N-<name>`), gets your approval at a **phase-plan
-gate**, then runs the rest of the pipeline once per phase, shipping between them. A routine feature is
-a single phase. **Discovery is not re-run per phase** — a phase is an increment of an already-validated
-idea, not a new idea.
+The bridge runs the reviewer in a read-only permission mode, validates structured output, binds it to
+the artifact SHA-256, and logs host/model/effort/session/attempts/fallback/findings/verdict as JSONL.
+`peer-reviewer` may dispute a finding with cited evidence once; the same reviewer session must answer.
+An artifact edit invalidates the hash. Invalid output, stale bytes, unresolved disputes, or two failed
+review routes cannot advance automatically.
 
-## Who hands to whom
+## Build and verification routing
 
-| From | To | Gate | Carries |
-|---|---|---|---|
-| bootstrap interview (new project) | pipeline | **HUMAN** | filled CLAUDE.md §4/§5 (domain + stack), approved |
-| discovery | business-analyst | **CODEX** | `docs/discovery/<slug>.md` — GO/PIVOT approved by the gate; **Handoff to BA** section only |
-| discovery | — (pipeline stops) | **HUMAN** | a KILL verdict; nothing is handed forward, and no codex gate runs on it |
-| business-analyst | product-manager | **CODEX** | business-requirements.md (gate-approved) |
-| product-manager | architect | **CODEX** | product-spec.md (gate-approved) |
-| architect | designer (if UI) | auto | spec.md + owner-tagged tasks |
-| designer | build agents | **CODEX** | design.md (gate-approved) — UI initiatives only |
-| architect / designer | frontend·ios·flutter + backend (present) | auto | spec + tasks + design.md |
-| build agents | reviewers | auto | completion-report.md |
-| reviewers | `/feature` | auto | findings (owner + severity tagged); codex-reviewer adds its adjudication of each |
-| any codex gate | user | **HUMAN** | a held dispute, an unreachable Codex, or a gate still failing at round 3 |
-| `/feature` | frontend / ios / flutter / backend | auto | routed fixes (+ the AC each maps to) |
-| **backward:** architect → PM, designer → PM, PM → BA, BA → discovery, reviewer → build agent | — | auto | the ambiguity/defect |
-| **escalation:** any agent → user | **HUMAN** | — | a decision needing confirmation, not a guess |
+| Active platform | Builder | Required extra verification |
+|---|---|---|
+| web | `frontend` | browser `qa-tester`, accessibility |
+| ios | `ios` | attach-only `mobile-qa` |
+| flutter | `flutter` | attach-only `mobile-qa` |
+| backend | `backend` | `api-tester` |
 
-## Artifact paths (per initiative `<slug>`)
+`code-reviewer` and cross-host `peer-reviewer` always run. Only active platforms run builders. A
+non-UI feature records design N/A; it does not fabricate a design gate. Native mobile shipping is
+blocked without pinned Mobile MCP and an already running authenticated session.
+Mobile QA never builds, installs, uninstalls, launches, terminates, relaunches, creates, boots, erases,
+resets, or changes orientation.
 
-| Stage | Artifact |
+The orchestrator runs the complete `quality-gate.sh` before reviewers. Every active metric is
+mandatory, and every FAIL is a non-adjudicable owner blocker. `QUICK=1` exists only for builder fix
+loops and skips mutation execution only; it cannot produce final green.
+
+## Write ownership
+
+| Owner | Files |
 |---|---|
-| Discovery | `docs/discovery/<slug>.md` |
-| Requirements | `docs/requirements/<slug>-business-requirements.md` |
-| Product | `docs/product/<slug>-product-spec.md` |
-| Architecture | `docs/architecture/<slug>/spec.md` + `tasks/NN-*.md` |
-| Design | `docs/design/<slug>/design.md` (UI initiatives) |
-| Build | `docs/reports/<slug>/completion-report.md` (Web/iOS/Flutter/Backend owned sections) |
-| Verify | `docs/reports/<slug>/review.md` (`/feature`-written) |
-| Gates | `docs/reviews/<slug>/gates.md` (`/feature`-written — the codex-gate audit trail) |
+| definition roles | their pre-created discovery/requirements/product/architecture/design artifact |
+| builders | application code plus their completion-report section |
+| orchestrator | gate JSONL/Markdown, consolidated review, final report, branch/worktree state |
+| reviewers | none; evidence and findings are returned to the orchestrator |
+| project owner | `quality-gate.sh` configuration and project-owned `AGENTS.md` blocks |
 
-Templates for each live in `docs/_templates/` (including `design.template.md`). The `<slug>` is
-assigned by `/feature` at intake and is the traceability key.
-
-## Rules that are easy to forget
-
-- **Bootstrap before anything** on a new project: if CLAUDE.md §4/§5 still hold `<PLACEHOLDER>`s,
-  `/feature` interviews you to fill them and stops at a human gate. Never inherit domain/stack defaults
-  from a prior project. Skipped once the project is configured.
-- **Four codex gates** (discovery→BA, BA→PM, PM→architect, designer→build for UI initiatives) and
-  **two human gates** (bootstrap, phase plan). Everything else is automatic — except escalations and
-  the three ways a codex gate hands the decision back to you: unreachable Codex, a held dispute, or a
-  gate still failing at round 3.
-- **Every document artifact is written to the artifact writing standard** (`CLAUDE.md` §6): the
-  authoring agent invokes `/i-have-adhd:i-have-adhd` and shapes the document to it. The codex gates
-  check this, so a wall-of-prose spec comes back as a finding.
-- **A KILL is a real stop.** Discovery's job is to be the friction, and a fast honest no is its most
-  valuable output. `/feature` may not downgrade a KILL to "maybe later" — only you can overrule it.
-- **Escalate, don't assume.** When a decision needs confirmation, stop and ask the user.
-- **Backward handoffs are normal**, not failures — push ambiguity back to where it belongs.
-- **Green = zero open blockers and majors.** Minors may ship but are listed in the report.
-- **Loop cap = 3 rounds**, then report to the user even if not green — leading with an explicit
-  NOT SHIPPABLE status if blockers/majors remain.
-- **Owned sections / single writer:** each dispatched build agent (frontend/ios/flutter/backend) owns
-  one section of the completion report, which `/feature` pre-creates; `/feature` is the sole writer of
-  `review.md`.
-- **SIMPLE wins.** Over-engineering to satisfy a principle is a review finding, not a virtue.
-- **Worktree isolation is automatic, but `CLAUDE.md` §9 outranks it.** By default `/feature` creates
-  `.worktrees/<slug>` off `develop` at Setup and merges it back (`--no-ff`, conflicts resolved) once the
-  initiative ships green, then removes the worktree and branch. This is what makes concurrent `/feature`
-  sessions on the same repo safe. A `NOT SHIPPABLE` result at the loop cap skips the merge and leaves
-  the worktree for the next session to resume from.
-  **That default applies only where §9 hasn't replaced it.** §9 is the project's git policy, not a copy
-  of the plugin's — a project that uses a different granularity (one worktree per edit), base branch,
-  merge target, or requires review before merge writes that in §9, and `/feature` follows §9 instead.
-  If §9 and this default conflict, §9 wins; if they can't be reconciled, `/feature` asks rather than
-  picking.
-
-## Enforcement & known limits
-
-- **Read-only reviewers are enforced, not just prompted:** code-reviewer, qa-tester, and api-tester
-  declare restricted `tools:` (no Write/Edit), and the plugin ships a PreToolUse hook
-  (`hooks/guard-writes.sh`) that blocks any subagent writing `review.md`, any reviewer writing files,
-  and spec/design agents writing under `apps/`/`services/`.
-- **Native-client verification is test-based, not driven:** qa-tester reaches only the browser. iOS
-  and Flutter AC are verified by the build agents' own XCTest / widget-test suites, whose results are
-  required evidence in the completion report. A simulator-driving mobile-qa agent is a possible future
-  addition.
-- **Per-role models:** agents inherit the session model by default. If you want cheaper reviewers or a
-  stronger architect, add a `model:` field to the agent frontmatter — deliberately not preset here.
-
-## Starting an initiative
-
-`/feature <brief>` (the brief inline or a `thoughts.md` seed file). On a brand-new project it first
-runs the **bootstrap interview** to fill CLAUDE.md §4/§5 (domain + stack) and stops for your approval;
-on an already-configured project it skips that. Then it assigns a slug, creates that initiative's git
-worktree (`.worktrees/<slug>` off `develop`), runs **discovery** (which interrogates the idea and
-returns a GO/PIVOT/KILL verdict), and stops at the first pipeline gate. Expect discovery to push back —
-that is the point of it.
+Claude file-edit payloads and Codex `apply_patch` payloads pass through the same guard. Reviewer
+read-only permissions remain authoritative because shell-side effects cannot be exhaustively detected
+by hooks.

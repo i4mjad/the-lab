@@ -33,7 +33,7 @@ document it cites.
 - Does any story or criterion specify a technology, schema, endpoint shape, or component structure?
   That is the architect's decision being pre-empted, and it is a real finding.
 
-**6. It is written to the project's artifact writing standard (`CLAUDE.md` §6).**
+**6. It is written to the project's artifact writing standard (`AGENTS.md` §6).**
 - Every artifact here is written for a reader with ADHD. The standard: decision or action first,
   numbered multi-step work, one bounded idea per bullet, no preamble and no closing recap, concrete
   numbers instead of vague qualifiers, lists capped at five items.
